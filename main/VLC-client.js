@@ -6,27 +6,28 @@ const helper = new Helper();
 
 class vlc_client extends VLC {
 	constructor() {
-        config.triesInterval = config.refreshMs;
+		config.username = "";
+		config.triesInterval = config.refreshMs;
 		config.tickLengthMs = config.refreshMs;
 		delete config.refreshMs;
-        
+
 		super(config);
-        
+
 		this.justStarted = true;
-        
-        this.events();
+
+		this.events();
 	}
 
 	events() {
 		super.addListener("metachange", (meta) => meta);
 
 		super.on("statuschange", async (prev = null, status = null) => {
-			if (!await helper.isStatusOK(status)) return;
+			if (!(await this.isStatusOK(status))) return;
 
-			if (this.justStarted || (!await helper.isStatusOK(prev) || prev.information.category.meta.filename) !== status.information.category.meta.filename) {
+			if (this.justStarted || !(await this.isStatusOK(prev)) || prev.information.category.meta.filename !== status.information.category.meta.filename) {
 				const formattedMeta = await helper.tryFormat(status.information.category.meta);
 
-				if(!formattedMeta) return;
+				if (!formattedMeta) return;
 
 				super.emit("metachange", formattedMeta);
 			}
@@ -35,13 +36,28 @@ class vlc_client extends VLC {
 		});
 
 		super.on("connect", () => {
-			console.log("Connected to VLC.");
+			console.log(`Listening to VLC on port ${config.port}.`);
 		});
 
 		super.on("error", (err) => {
-			if (!err.message.includes("ECONNREFUSED")) {
-				console.log(`VLC | ${err.message}`);
+			if (err.message.includes("ECONNREFUSED")) return;
+
+			console.log(`VLC | ${err.message}`);
+		});
+	}
+
+	isStatusOK(status) {
+		return new Promise((resolve) => {
+			if (
+				typeof status === "undefined" ||
+				typeof status.information === "undefined" ||
+				typeof status.information.category === "undefined" ||
+				typeof status.information.category.meta === "undefined"
+			) {
+				return resolve(false);
 			}
+
+			return resolve(true);
 		});
 	}
 }

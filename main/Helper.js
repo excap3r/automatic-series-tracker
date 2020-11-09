@@ -24,20 +24,20 @@ class Helper {
 				title = title.replace(clearSymbols, " ");
 				title = title.replace(reduceSpaces, " ").trim();
 
-				// s = season, e = episode
-				let seRegex = /S\d+E\d+|S\d+xE\d+|\d+x\d+/gi;
-				let onlyNumsReg = /[^\d]/g;
-
-				const regTest = seRegex.test(title);
-
 				if (!meta.seasonNumber || !meta.episodeNumber) {
+					// s = season, e = episode
+					let seRegex = /^[A-z\s]+(S\d+E\d+|S\d+xE\d+|\d+x\d+)$/gi;
+					let onlyNumsReg = /[^\d]/g;
+
+					const regTest = seRegex.test(title);
+
 					let chosenRegex = regTest ? seRegex : null;
 
 					if (!chosenRegex) return resolve(false);
 
 					chosenRegex.lastIndex = 0;
 
-					let SeasonAndEpisode = chosenRegex.exec(title)[0].split(/[ex]/ig);
+					let SeasonAndEpisode = chosenRegex.exec(title)[0].split(/[ex]/gi);
 
 					SeasonAndEpisode = SeasonAndEpisode.filter((element) => element.length);
 
@@ -47,29 +47,13 @@ class Helper {
 					if (!meta.seasonNumber) meta.seasonNumber = season;
 					if (!meta.episodeNumber) meta.episodeNumber = episode;
 
-					let cleanTitle = seRegex ? /(S\d+E\d+.*)|(S\d+xE\d+.*)/gim : /(\d+x\d+.*)/gim;
+					let cleanTitle = seRegex ? /(S\d+E\d+.*)|(S\d+xE\d+.*)/gi : /(\d+x\d+.*)/gi;
 
 					title = title.replace(cleanTitle, "").trim();
-					
-					return resolve(title);
 				}
+				return resolve(title);
 			});
 		}
-	}
-
-	isStatusOK(status) {
-		return new Promise((resolve) => {
-			if (
-				typeof status === "undefined" ||
-				typeof status.information === "undefined" ||
-				typeof status.information.category === "undefined" ||
-				typeof status.information.category.meta === "undefined"
-			) {
-				return resolve(false);
-			}
-
-			return resolve(true);
-		});
 	}
 }
 

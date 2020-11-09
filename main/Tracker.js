@@ -1,6 +1,6 @@
 const WPAPI = require("wpapi");
 const { createInterface } = require("readline");
-const config = require("../config/config.json").wp;
+const config = require("../config/config.json")["series-tracker"];
 
 class Tracker {
 	constructor() {
