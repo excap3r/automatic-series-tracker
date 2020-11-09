@@ -44,9 +44,9 @@ class Tracker {
 			.series()
 			.create(args)
 			.then(() => {
-				console.log(`Successfully added to tracking.`);
+				log(`Added "${args.title}" to tracking.`);
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => this.log(err));
 	}
 
 	update(args) {
@@ -60,9 +60,9 @@ class Tracker {
 			.id(id)
 			.update(args)
 			.then(() => {
-				console.log(`Successfully updated.`);
+				this.log(`Succesfully updated "${args.title}".`);
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => this.log(err));
 	}
 
 	fetch() {
@@ -106,6 +106,7 @@ class Tracker {
 		let result = null;
 
 		for (let i = 0; i < series.length - 1; i++) {
+			// remove diacrtic
 			let title = series[i].title
 				.normalize("NFD")
 				.replace(/[\u0300-\u036f]/g, "")
@@ -135,7 +136,9 @@ class Tracker {
 
 	getPasswordFromUser() {
 		return new Promise(async (resolve) => {
-			let password = await this.askUser("Please type your password: ");
+			let password = await this.askUser("Please enter your password: ");
+
+			console.clear();
 
 			resolve(password);
 		});
@@ -153,6 +156,10 @@ class Tracker {
 				resolve(answer);
 			});
 		});
+	}
+
+	log(message) {
+		console.log(`Tracker | ${message}`);
 	}
 }
 

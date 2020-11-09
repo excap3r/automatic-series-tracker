@@ -14,8 +14,10 @@ class vlc_client extends VLC {
 		super(config);
 
 		this.justStarted = true;
-
+		
 		this.events();
+
+		this.log(`Listening on port ${config.port}.`);
 	}
 
 	events() {
@@ -36,13 +38,13 @@ class vlc_client extends VLC {
 		});
 
 		super.on("connect", () => {
-			console.log(`Listening to VLC on port ${config.port}.`);
-		});
+			this.log("Succesfully connected.");
+		})
 
 		super.on("error", (err) => {
 			if (err.message.includes("ECONNREFUSED")) return;
 
-			console.log(`VLC | ${err.message}`);
+			this.log(err.message);
 		});
 	}
 
@@ -59,6 +61,10 @@ class vlc_client extends VLC {
 
 			return resolve(true);
 		});
+	}
+
+	log(message) {
+		console.log(`VLC | ${message}`);
 	}
 }
 
