@@ -63,3 +63,9 @@ This allows you to watch your favorite series on VLC and automatically synchroni
 }
 ```
 
+## Todo
+- add pm2 support
+	- new error handling
+
+- optional login to series-tracker without setting password in config
+	- type password in cmd & replace chars with *
