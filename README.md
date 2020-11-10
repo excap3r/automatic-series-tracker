@@ -27,7 +27,7 @@ This allows you to watch your favorite series on VLC and automatically synchroni
 - Windows: double-click on "start.bat"
 - Terminal: type "node main"
 
-- If your VLC is running correctly and is running then it will automatically connect and will respond with "Succesfully connected"
+- If your VLC is working correctly and is running then it will automatically connect and will respond with "Succesfully connected"
 - Now just play your favorite series on VLC and Tracker will automatically sync your series to website
 
 ## VLC Configuration ▶️
