@@ -1,6 +1,4 @@
 const WPAPI = require("wpapi");
-const { createInterface } = require("readline");
-const { exception } = require("console");
 const config = require("../config/config.json")["series-tracker"];
 
 class Tracker {
