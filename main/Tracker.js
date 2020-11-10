@@ -1,5 +1,6 @@
 const WPAPI = require("wpapi");
 const { createInterface } = require("readline");
+const { exception } = require("console");
 const config = require("../config/config.json")["series-tracker"];
 
 class Tracker {
@@ -17,13 +18,9 @@ class Tracker {
 	}
 
 	async init() {
-		if (!this.username) this.username = await this.getNameFromUser();
-		if (!this.password) this.password = await this.getPasswordFromUser();
+		if (!this.username || !this.password) return this.handleError({ code: "missing_credentials" });
 
-		this.authenticate();
-	}
-
-	authenticate() {
+		// authenticate
 		this.wp = new WPAPI({
 			endpoint: this.wpEndpoint,
 
@@ -147,6 +144,7 @@ class Tracker {
 		});
 	}
 
+	/* DEPRECATED | may be used in future!
 	askUser(text) {
 		return new Promise(async (resolve) => {
 			const rl = createInterface({
@@ -160,10 +158,23 @@ class Tracker {
 			});
 		});
 	}
+	*/
 
 	handleError(err) {
-		if (err.code === "incorrect_password") this.log("Incorrect name or password, please update your creds in config.json!");
-		else this.log(`ERROR!: ${err.code}`);
+		switch (err.code) {
+			case "incorrect_password":
+				this.log("Incorrect name or password, please update your creds in config!");
+				break;
+			case "missing_credentials":
+				this.log("Missing login credentials, please fill them in config!");
+				break;
+			case "invalid_username":
+				this.log("Your username is not valid, please update your creds in config!");
+				break;
+			default:
+				this.log(`ERROR!: ${err.code}`);
+				break;
+		}
 
 		process.exit(1);
 	}
