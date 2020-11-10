@@ -46,7 +46,7 @@ class Tracker {
 			.then(() => {
 				log(`Added "${args.title}" to tracking.`);
 			})
-			.catch((err) => this.log(err));
+			.catch((err) => this.handleError(err));
 	}
 
 	update(args) {
@@ -62,7 +62,7 @@ class Tracker {
 			.then(() => {
 				this.log(`Succesfully updated "${args.title}".`);
 			})
-			.catch((err) => this.log(err));
+			.catch((err) => this.handleError(err));
 	}
 
 	fetch() {
@@ -74,7 +74,10 @@ class Tracker {
 					let result = await getOnlyNeededInfo(series);
 					resolve(result);
 				})
-				.catch((err) => resolve(err));
+				.catch((err) => {
+					this.handleError(err);
+					resolve(false);
+				});
 		});
 
 		function getOnlyNeededInfo(series) {
@@ -156,6 +159,13 @@ class Tracker {
 				resolve(answer);
 			});
 		});
+	}
+
+	handleError(err) {
+		if (err.code === "incorrect_password") this.log("Incorrect name or password, please update your creds in config.json!");
+		else this.log(`ERROR!: ${err.code}`);
+
+		process.exit(1);
 	}
 
 	log(message) {

@@ -7,5 +7,7 @@ const vlc = new VLC_client();
 vlc.on("metachange", async (meta) => {
 	const series = await tracker.fetch();
 
+	if (!series) return;
+	
 	tracker.consume(meta, series);
 });
