@@ -18,8 +18,7 @@ This allows you to watch your favorite series on VLC and automatically synchroni
 
 1. Download last [release](https://github.com/JakubSladek/automatic-series-tracker/releases)
 2. Unzip folder and grab it where do you want
-3. Double click on install.bat and wait for all modules to install
-3b. Or open project's main directory in terminal and type "npm install" and wait for all modules to install
+3. Double click on install.bat and wait for all modules to install or open the project's main directory in terminal and type "npm install" and wait for all modules to install
 
 ## How to start 🤖
 
