@@ -4,7 +4,7 @@ const Helper = require("./Helper");
 
 const helper = new Helper();
 
-class vlc_client extends VLC {
+class VLC_client extends VLC {
 	constructor() {
 		config.username = "";
 		config.triesInterval = config.refreshMs;
@@ -68,4 +68,4 @@ class vlc_client extends VLC {
 	}
 }
 
-module.exports = vlc_client;
+module.exports = VLC_client;
