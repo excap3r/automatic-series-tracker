@@ -124,40 +124,6 @@ class Tracker {
 		if (!upToDate) return this.update(result);
 	}
 
-	getNameFromUser() {
-		return new Promise(async (resolve) => {
-			let name = await this.askUser("Please type your name: ");
-
-			resolve(name);
-		});
-	}
-
-	getPasswordFromUser() {
-		return new Promise(async (resolve) => {
-			let password = await this.askUser("Please enter your password: ");
-
-			console.clear();
-
-			resolve(password);
-		});
-	}
-
-	/* DEPRECATED | may be used in future!
-	askUser(text) {
-		return new Promise(async (resolve) => {
-			const rl = createInterface({
-				input: process.stdin,
-				output: process.stdout,
-			});
-
-			rl.question(`Tracker | ${text}`, (answer) => {
-				rl.close();
-				resolve(answer);
-			});
-		});
-	}
-	*/
-
 	handleError(err) {
 		switch (err.code) {
 			case "incorrect_password":

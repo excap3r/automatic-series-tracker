@@ -17,7 +17,7 @@ class Helper {
 		function extractMeta(title) {
 			return new Promise((resolve) => {
 				const clearFilename = /.mkv|.mp4|.mp3|.avi|.wmv|.flv|.3gp/g;
-				const clearSymbols = /[^a-zA-Z0-9ÁÉĚÍÝÓÚŮŽŠČŘĎŤŇáéěíýóúůžščřďťňs]/g;
+				const clearSymbols = /[^a-zA-Z0-9ÁÉĚÍÝÓÚŮŽŠČŘĎŤŇĹáéěíýóúůžščřďťĺňs]/g;
 				const reduceSpaces = /\s\s+/g;
 
 				title = title.replace(clearFilename, "");
