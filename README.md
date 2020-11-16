@@ -1,5 +1,7 @@
 # Automatic Series Tracker
 
+### Deprecated, please use [TypeScript version](https://github.com/JakubSladek/series-tracker-client) instead.
+
 This allows you to watch your favorite series on VLC and automatically synchronize series with [Series-Tracker](https://github.com/JakubSladek/series-tracker).
 
 ## How does that work? 🤔
@@ -14,6 +16,7 @@ This allows you to watch your favorite series on VLC and automatically synchroni
 - Requirements:
   - [Node.js](https://nodejs.org/)
   - [NPM](https://www.npmjs.com/get-npm) (installed with Node.js)
+  - [VLC](https://www.videolan.org/vlc/index.html)
   - A [series-tracker](https://github.com/JakubSladek/series-tracker) website to be registered on.
 
 1. Download last [release](https://github.com/JakubSladek/automatic-series-tracker/releases)
